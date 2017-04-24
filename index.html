@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>Socket web</title>
+    <link rel="stylesheet" href="">
+</head>
+<body>
+    <h1>Contador</h1>
+    <div id="contador">0</div>
+    <button id="increment">+</button>
+    <button id="decrement">-</button>
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript">
+        let increment = document.getElementById('increment')
+
+        const socket = io.connect('/')
+        socket.on('connect', () => {
+            console.log('CONECTADO!');
+        })
+        increment.addEventListener('click', event => {
+            socket.emit('increment', 'INCREMENT')
+        })
+        decrement.addEventListener('click', event => {
+            socket.emit('decrement', 'DECREMENT')
+        })
+
+        socket.on('show', value=>{
+            document.getElementById('contador').innerHTML = value
+        })
+    </script>    
+</body>
+</html>
